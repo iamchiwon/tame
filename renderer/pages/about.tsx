@@ -1,13 +1,17 @@
 import Link from "next/link";
-import Layout from "../components/Layout";
+import { Layout } from "../components/Layout";
 
 const AboutPage = () => (
-  <Layout title="About | Next.js + TypeScript + Electron Example">
-    <h1>About</h1>
-    <p>This is the about page</p>
-    <p>
-      <Link href="/">Go home</Link>
-    </p>
+  <Layout>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">About</h1>
+      <p className="mb-4">This is the about page</p>
+      <p>
+        <Link href="/" className="text-blue-500 hover:underline">
+          Go home
+        </Link>
+      </p>
+    </div>
   </Layout>
 );
 

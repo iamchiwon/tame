@@ -4,34 +4,34 @@
 
 ### 데이터베이스 구현
 
-- [ ] SQLite 의존성 설치 (`better-sqlite3`, `@types/better-sqlite3`)
-- [ ] `renderer/lib/database.ts` - SQLite 연결 및 스키마 생성
-- [ ] `renderer/lib/types.ts` - TypeScript 타입 정의
-- [ ] 데이터베이스 테이블 생성 (tabs, notifications, settings)
-- [ ] 기본 CRUD 함수 구현
+- [x] SQLite 의존성 설치 (`better-sqlite3`, `@types/better-sqlite3`)
+- [x] `renderer/lib/database.ts` - SQLite 연결 및 스키마 생성
+- [x] `renderer/lib/types.ts` - TypeScript 타입 정의
+- [x] 데이터베이스 테이블 생성 (tabs, notifications, settings)
+- [x] 기본 CRUD 함수 구현
 
 ### UI 환경 설정
 
-- [ ] Tailwind CSS 설치 및 설정
-- [ ] shadcn/ui 초기화 및 기본 컴포넌트 설치
-- [ ] Lucide React 아이콘 라이브러리 설치
-- [ ] 기본 테마 및 색상 시스템 설정
-- [ ] 공통 컴포넌트 (Button, Input, Dialog 등) 설정
+- [x] Tailwind CSS 설치 및 설정
+- [x] shadcn/ui 초기화 및 기본 컴포넌트 설치
+- [x] Lucide React 아이콘 라이브러리 설치
+- [x] 기본 테마 및 색상 시스템 설정
+- [x] 공통 컴포넌트 (Button, Input, Dialog 등) 설정
 
 ### 상태 관리 설정
 
-- [ ] Zustand 의존성 설치
-- [ ] `renderer/store/tab-store.ts` - 탭 상태 관리
-- [ ] `renderer/store/notification-store.ts` - 알림 상태 관리
-- [ ] `renderer/store/settings-store.ts` - 앱 설정 관리
+- [x] Zustand 의존성 설치
+- [x] `renderer/store/tab-store.ts` - 탭 상태 관리
+- [x] `renderer/store/notification-store.ts` - 알림 상태 관리
+- [x] `renderer/store/settings-store.ts` - 앱 설정 관리
 
 ### 기본 레이아웃
 
-- [ ] `renderer/components/TabBar.tsx` - 탭 네비게이션 컴포넌트 (shadcn/ui Tabs 활용)
-- [ ] `renderer/components/Layout.tsx` - 메인 레이아웃 수정
-- [ ] 탭 기반 레이아웃 구조 구현
-- [ ] 반응형 디자인 적용 (Tailwind CSS)
-- [ ] 다크/라이트 모드 지원
+- [x] `renderer/components/TabBar.tsx` - 탭 네비게이션 컴포넌트 (shadcn/ui Tabs 활용)
+- [x] `renderer/components/Layout.tsx` - 메인 레이아웃 수정
+- [x] 탭 기반 레이아웃 구조 구현
+- [x] 반응형 디자인 적용 (Tailwind CSS)
+- [x] 다크/라이트 모드 지원
 
 ---
 
