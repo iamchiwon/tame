@@ -12,6 +12,9 @@ interface NotificationState {
   addNotification: (notification: Notification) => void;
   markAsRead: (id: number) => Promise<void>;
   markGroupAsRead: (tabId: number) => Promise<void>;
+  markAllAsRead: () => Promise<void>;
+  deleteNotifications: (ids: number[]) => Promise<void>;
+  deleteAllNotifications: () => Promise<void>;
   setViewMode: (mode: 'all' | 'grouped') => void;
   setFilters: (filters: NotificationFilters) => void;
   loadNotifications: () => Promise<void>;
@@ -116,5 +119,66 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
       notifications: [],
       unreadCount: 0
     });
+  },
+
+  deleteNotifications: async (ids: number[]) => {
+    try {
+      if (typeof window === 'undefined') {
+        const db = getDatabase();
+        await db.deleteNotifications(ids);
+      }
+
+      set(state => {
+        const updatedNotifications = state.notifications.filter(
+          notification => !ids.includes(notification.id)
+        );
+
+        return {
+          notifications: updatedNotifications,
+          unreadCount: updatedNotifications.filter(n => !n.isRead).length
+        };
+      });
+    } catch (error) {
+      console.error('Failed to delete notifications:', error);
+    }
+  },
+
+  markAllAsRead: async () => {
+    try {
+      if (typeof window === 'undefined') {
+        const db = getDatabase();
+        await db.markAllAsRead();
+      }
+
+      set(state => {
+        const updatedNotifications = state.notifications.map(notification => ({
+          ...notification,
+          isRead: true
+        }));
+
+        return {
+          notifications: updatedNotifications,
+          unreadCount: 0
+        };
+      });
+    } catch (error) {
+      console.error('Failed to mark all as read:', error);
+    }
+  },
+
+  deleteAllNotifications: async () => {
+    try {
+      if (typeof window === 'undefined') {
+        const db = getDatabase();
+        await db.deleteAllNotifications();
+      }
+
+      set({
+        notifications: [],
+        unreadCount: 0
+      });
+    } catch (error) {
+      console.error('Failed to delete all notifications:', error);
+    }
   }
 }));

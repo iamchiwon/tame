@@ -10,6 +10,7 @@ const url_1 = require("url");
 const electron_1 = require("electron");
 const electron_is_dev_1 = __importDefault(require("electron-is-dev"));
 const electron_next_1 = __importDefault(require("electron-next"));
+const webview_manager_1 = require("./webview-manager");
 // Prepare the renderer once the app is ready
 electron_1.app.on("ready", async () => {
     await (0, electron_next_1.default)("./renderer");
@@ -32,6 +33,22 @@ electron_1.app.on("ready", async () => {
             slashes: true,
         });
     mainWindow.loadURL(url);
+    // WebViewManager 초기화
+    const webViewManager = new webview_manager_1.WebViewManager(mainWindow);
+    // 웹뷰 등록 이벤트 처리
+    electron_1.ipcMain.on("register-webview", (_event, tabId, url, _title) => {
+        // webview의 webContents를 가져오는 방법은 복잡하므로
+        // 실제 구현에서는 webview 요소에서 직접 호출해야 함
+        console.log(`Registering webview for tab ${tabId}: ${url}`);
+    });
+    // 웹뷰 해제 이벤트 처리
+    electron_1.ipcMain.on("unregister-webview", (_event, tabId) => {
+        webViewManager.unregisterWebView(tabId);
+    });
+    // 앱 종료 시 정리
+    electron_1.app.on("before-quit", () => {
+        webViewManager.destroy();
+    });
 });
 // Quit the app once all windows are closed
 electron_1.app.on("window-all-closed", electron_1.app.quit);

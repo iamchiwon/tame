@@ -13,6 +13,11 @@ export interface Notification {
   title: string;
   message?: string;
   url?: string;
+  body?: string;
+  icon?: string;
+  tag?: string;
+  data?: any;
+  timestamp?: string;
   isRead: boolean;
   createdAt: string;
 }

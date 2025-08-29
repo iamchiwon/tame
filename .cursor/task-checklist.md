@@ -39,26 +39,26 @@
 
 ### 웹뷰 시스템
 
-- [ ] `renderer/components/WebViewTab.tsx` - 개별 웹뷰 탭
-- [ ] `renderer/components/TabManager.tsx` - 탭 상태 관리
-- [ ] `renderer/components/AddTabModal.tsx` - 새 탭 추가 모달
-- [ ] 탭 추가/삭제 기능
+- [x] `renderer/components/WebViewTab.tsx` - 개별 웹뷰 탭
+- [x] `renderer/components/TabManager.tsx` - 탭 상태 관리
+- [x] `renderer/components/AddTabModal.tsx` - 새 탭 추가 모달
+- [x] 탭 추가/삭제 기능
 - [ ] 탭 순서 변경 (드래그 앤 드롭)
-- [ ] 웹뷰 세션 유지
+- [x] 웹뷰 세션 유지
 
 ### 알림 수집 시스템
 
-- [ ] `electron-src/notification-handler.ts` - 알림 수집 로직
-- [ ] `electron-src/webview-manager.ts` - 웹뷰 관리
-- [ ] Notification API 가로채기
-- [ ] 알림 데이터베이스 저장
+- [x] `electron-src/notification-handler.ts` - 알림 수집 로직
+- [x] `electron-src/webview-manager.ts` - 웹뷰 관리
+- [x] Notification API 가로채기
+- [x] 알림 데이터베이스 저장
 - [ ] OS 알림 비활성화
 
 ### 알림 센터 UI
 
-- [ ] `renderer/components/NotificationCenter.tsx` - 메인 알림 센터 (shadcn/ui Card, Badge 활용)
-- [ ] `renderer/components/NotificationItem.tsx` - 개별 알림 아이템 (Lucide 아이콘 활용)
-- [ ] `renderer/components/NotificationGroup.tsx` - 서비스별 그룹
+- [x] `renderer/components/NotificationCenter.tsx` - 메인 알림 센터 (shadcn/ui Card, Badge 활용)
+- [x] `renderer/components/NotificationItem.tsx` - 개별 알림 아이템 (Lucide 아이콘 활용)
+- [x] `renderer/components/NotificationGroup.tsx` - 서비스별 그룹
 - [ ] All/Grouped 뷰 모드 (shadcn/ui ToggleGroup 활용)
 - [ ] 읽음/읽지 않음 상태 관리
 - [ ] 알림 필터링 UI (shadcn/ui Select, Input 활용)

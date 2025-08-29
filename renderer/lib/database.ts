@@ -1,4 +1,4 @@
-import { Tab, Notification, NotificationFilters, AppSettings } from './types';
+import { Tab, Notification, NotificationFilters } from './types';
 
 // Electron 환경에서만 실행
 let Database: any;
@@ -44,6 +44,11 @@ export class DatabaseManager {
         title TEXT NOT NULL,
         message TEXT,
         url TEXT,
+        body TEXT,
+        icon TEXT,
+        tag TEXT,
+        data TEXT,
+        timestamp TEXT,
         is_read BOOLEAN DEFAULT FALSE,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (tab_id) REFERENCES tabs(id) ON DELETE CASCADE
@@ -161,20 +166,42 @@ export class DatabaseManager {
 
   async addNotification(notification: Omit<Notification, 'id' | 'createdAt'>): Promise<Notification> {
     const stmt = this.db.prepare(`
-      INSERT INTO notifications (tab_id, title, message, url, is_read)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO notifications (tab_id, title, message, url, is_read, body, icon, tag, data, timestamp)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const result = stmt.run(
       notification.tabId,
       notification.title,
-      notification.message,
-      notification.url,
-      notification.isRead
+      notification.message || '',
+      notification.url || '',
+      notification.isRead ? 1 : 0,
+      notification.body || '',
+      notification.icon || '',
+      notification.tag || '',
+      JSON.stringify(notification.data || {}),
+      notification.timestamp || new Date().toISOString()
     );
 
     const newNotification = await this.getNotificationById(result.lastInsertRowid as number);
     return newNotification!;
+  }
+
+  async addNotificationFromData(notificationData: any): Promise<Notification> {
+    const notification: Omit<Notification, 'id' | 'createdAt'> = {
+      title: notificationData.title,
+      message: notificationData.body || '',
+      body: notificationData.body,
+      icon: notificationData.icon,
+      tag: notificationData.tag,
+      data: notificationData.data,
+      tabId: notificationData.tabId,
+      url: '',
+      timestamp: notificationData.timestamp,
+      isRead: false
+    };
+
+    return this.addNotification(notification);
   }
 
   async markAsRead(id: number): Promise<void> {
@@ -185,6 +212,22 @@ export class DatabaseManager {
   async markGroupAsRead(tabId: number): Promise<void> {
     const stmt = this.db.prepare('UPDATE notifications SET is_read = TRUE WHERE tab_id = ?');
     stmt.run(tabId);
+  }
+
+  async markAllAsRead(): Promise<void> {
+    const stmt = this.db.prepare('UPDATE notifications SET is_read = TRUE');
+    stmt.run();
+  }
+
+  async deleteNotifications(ids: number[]): Promise<void> {
+    const placeholders = ids.map(() => '?').join(',');
+    const stmt = this.db.prepare(`DELETE FROM notifications WHERE id IN (${placeholders})`);
+    stmt.run(...ids);
+  }
+
+  async deleteAllNotifications(): Promise<void> {
+    const stmt = this.db.prepare('DELETE FROM notifications');
+    stmt.run();
   }
 
   private async getNotificationById(id: number): Promise<Notification | null> {
