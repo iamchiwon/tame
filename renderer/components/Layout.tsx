@@ -1,31 +1,37 @@
-import React, { ReactNode } from "react";
-import Link from "next/link";
-import Head from "next/head";
+import React, { useState } from "react";
+import { TabBar } from "./TabBar";
+import { AddTabModal } from "./AddTabModal";
 
-type Props = {
-  children: ReactNode;
-  title?: string;
+interface LayoutProps {
+  children?: React.ReactNode;
+}
+
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [isAddTabModalOpen, setIsAddTabModalOpen] = useState(false);
+
+  const handleAddTab = () => {
+    setIsAddTabModalOpen(true);
+  };
+
+  return (
+    <div className="h-screen flex flex-col bg-background">
+      <TabBar onAddTab={handleAddTab} />
+
+      <main className="flex-1 overflow-hidden">
+        {children || (
+          <div className="flex items-center justify-center h-full text-muted-foreground">
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold mb-2">Welcome to Tame</h2>
+              <p className="text-sm">Add your first tab to get started</p>
+            </div>
+          </div>
+        )}
+      </main>
+
+      <AddTabModal
+        isOpen={isAddTabModalOpen}
+        onClose={() => setIsAddTabModalOpen(false)}
+      />
+    </div>
+  );
 };
-
-const Layout = ({ children, title = "This is the default title" }: Props) => (
-  <div>
-    <Head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <header>
-      <nav>
-        <Link href="/">Home</Link> | <Link href="/about">About</Link> |{" "}
-        <Link href="/initial-props">With Initial Props</Link>
-      </nav>
-    </header>
-    {children}
-    <footer>
-      <hr />
-      <span>I'm here to stay (Footer)</span>
-    </footer>
-  </div>
-);
-
-export default Layout;

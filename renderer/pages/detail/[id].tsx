@@ -1,5 +1,5 @@
 // import { NextPageContext } from 'next'
-import Layout from "../../components/Layout";
+import { Layout } from "../../components/Layout";
 import { User } from "../../interfaces";
 import { findAll, findData } from "../../utils/sample-api";
 import ListDetail from "../../components/ListDetail";
@@ -17,19 +17,19 @@ type Props = {
 const InitialPropsDetail = ({ item, errors }: Props) => {
   if (errors) {
     return (
-      <Layout title={`Error | Next.js + TypeScript + Electron Example`}>
-        <p>
-          <span style={{ color: "red" }}>Error:</span> {errors}
-        </p>
+      <Layout>
+        <div className="p-8">
+          <p>
+            <span className="text-red-500">Error:</span> {errors}
+          </p>
+        </div>
       </Layout>
     );
   }
 
   return (
-    <Layout
-      title={`${item ? item.name : "Detail"} | Next.js + TypeScript Example`}
-    >
-      {item && <ListDetail item={item} />}
+    <Layout>
+      <div className="p-8">{item && <ListDetail item={item} />}</div>
     </Layout>
   );
 };
